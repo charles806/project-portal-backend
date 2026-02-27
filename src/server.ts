@@ -29,7 +29,7 @@ app.use(errorHandler);
 process.on('SIGTERM', async () => {
   console.log('SIGTERM received, closing connections...');
   await prisma.$disconnect();
-  await redis.quit();
+  if (redis) await redis.quit();
   process.exit(0);
 });
 
