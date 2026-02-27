@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { authMiddleware } from './middleware/auth';
+import { requireAuth } from './middleware/auth';
 import { errorHandler } from './middleware/errorHandler';
 import routes from './routes';
 import prisma from './config/database';
@@ -18,7 +18,6 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json());
-app.use(authMiddleware);
 
 // Routes
 app.use('/api/v1', routes);

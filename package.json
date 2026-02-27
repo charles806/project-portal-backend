@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/charles806/project-portal-backend#readme",
   "dependencies": {
+    "@clerk/clerk-react": "^5.61.2",
+    "@clerk/clerk-sdk-node": "^4.13.23",
     "@clerk/express": "^1.7.74",
     "@neondatabase/serverless": "^1.0.2",
     "@prisma/client": "^5.22.0",

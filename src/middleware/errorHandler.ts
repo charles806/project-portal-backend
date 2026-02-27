@@ -7,7 +7,7 @@ export const errorHandler = (
   next: NextFunction
 ) => {
   console.error('Error:', err.stack);
-  
+
   res.status(500).json({
     error: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error',
   });

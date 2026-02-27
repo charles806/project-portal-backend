@@ -1,11 +1,10 @@
 import { Router } from 'express';
 import healthRouter from './health';
-// Import other route modules here
+import projectsRouter from './project';
 
 const router = Router();
 
 router.use('/health', healthRouter);
-// router.use('/workspaces', workspaceRouter); // Week 2
-// router.use('/projects', projectRouter);     // Week 2
+router.use('/projects', projectsRouter);
 
 export default router;

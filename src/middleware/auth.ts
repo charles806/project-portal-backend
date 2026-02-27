@@ -1,13 +1,17 @@
-import { clerkMiddleware, requireAuth } from '@clerk/express';
-import { Request, Response, NextFunction } from 'express';
+import clerkClient from "@clerk/clerk-sdk-node";
 
-// Apply Clerk middleware to all routes
-export const authMiddleware = clerkMiddleware();
+export const requireAuth = async (req, res, next) => {
+  const token = req.headers.authorization?.replace('Bearer ', '');
 
-// Protect specific routes
-export const requireAuthMiddleware = requireAuth();
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
 
-// Extract user from Clerk session
-export const getUserId = (req: Request): string | null => {
-    return req.auth?.userId || null;
+  try {
+    const session = await clerkClient.verifyToken(token);
+    (req as any).userId = session.sub;
+    next();
+  } catch (error) {
+    res.status(401).json({ error: 'Invalid token' });
+  }
 };
