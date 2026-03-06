@@ -1,22 +1,42 @@
 import { Request, Response, NextFunction } from 'express';
-import { clerkClient } from '@clerk/clerk-sdk-node';
+import { verifyAccessToken } from '../utils/jwt';
+import { UnauthorizedError } from '../utils/errors';
 
-export const requireAuth = async (
-  req: Request,
+// Augment Express's Request type globally so req.user has our custom shape
+declare global {
+  namespace Express {
+    interface User {
+      userId: string;
+      email: string;
+      username?: string;
+    }
+  }
+}
+
+export interface AuthRequest extends Request {
+  user?: {
+    userId: string;
+    email: string;
+    username?: string;
+  };
+}
+
+export async function authenticateToken(
+  req: AuthRequest,
   res: Response,
   next: NextFunction
-): Promise<void> => {
+) {
   try {
-    const token = req.headers.authorization?.replace('Bearer ', '');
+    const token = req.cookies?.accessToken || req.headers.authorization?.replace('Bearer ', '');
+
     if (!token) {
-      res.status(401).json({ error: 'Unauthorized' });
-      return;
+      throw new UnauthorizedError('No token provided');
     }
 
-    const session = await clerkClient.verifyToken(token);
-    (req as any).userId = session.sub;
+    const payload = verifyAccessToken(token);
+    req.user = payload;
     next();
   } catch (error) {
-    res.status(401).json({ error: 'Invalid token' });
+    next(new UnauthorizedError('Invalid or expired token'));
   }
-};
+}
