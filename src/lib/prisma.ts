@@ -31,9 +31,9 @@ if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma;
 }
 
-prisma.$connect()
-  .then(() => console.log('[Database] Successfully connected to database'))
-  .catch((err) => console.error('[Database] Connection failed:', err));
+// prisma.$connect()
+//   .then(() => console.log('[Database] Successfully connected to database'))
+//   .catch((err) => console.error('[Database] Connection failed:', err));
 
 // Keep-alive ping to prevent Neon free-tier from auto-suspending (suspends after ~5min inactivity)
 if (process.env.NODE_ENV !== 'production') {
