@@ -14,12 +14,17 @@ model User {
   passwordHash    String?
   firstName       String?
   lastName        String?
+  avatarUrl         String? 
   oauthProvider   String?
   oauthId         String?
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
-  ownedWorkspaces Workspace[]       @relation("WorkspaceOwner")
-  workspaces      WorkspaceMember[]
+  // Relations
+  workspaces    WorkspaceMember[]
+  ownedWorkspaces Workspace[] @relation("WorkspaceOwner")
+
+  // Email verification
+  emailVerified Boolean  @default(false)
 }
 
 model Workspace {
@@ -30,6 +35,7 @@ model Workspace {
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
   projects  Project[]
+  invoices Invoice[]
   owner     User              @relation("WorkspaceOwner", fields: [ownerId], references: [id])
   members   WorkspaceMember[]
 }
@@ -61,6 +67,7 @@ model Project {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   milestones  Milestone[]
+  invoices   Invoice[]  
   workspace   Workspace   @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 }
 
@@ -83,4 +90,89 @@ model RefreshToken {
   userId    String
   expiresAt DateTime
   createdAt DateTime @default(now())
+}
+
+model EmailVerificationToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Invoice {
+  id            String        @id @default(cuid())
+  invoiceNumber String        @unique
+  workspaceId   String
+  projectId     String?
+  
+  // Client info
+  clientName    String
+  clientEmail   String?
+  clientAddress String?
+  
+  // Dates
+  issueDate     DateTime      @default(now())
+  dueDate       DateTime
+  
+  // Amounts
+  subtotal      Float         @default(0)
+  taxRate       Float         @default(0) // percentage (e.g., 10 for 10%)
+  taxAmount     Float         @default(0)
+  discount      Float         @default(0)
+  total         Float         @default(0)
+  
+  // Status
+  status        InvoiceStatus @default(DRAFT)
+  
+  // Notes
+  notes         String?
+  terms         String?
+  
+  // Timestamps
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  paidAt        DateTime?
+  
+  // Relations
+  workspace     Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  project       Project?      @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  items         InvoiceItem[]
+  
+  @@index([workspaceId])
+  @@index([projectId])
+  @@index([status])
+}
+
+model InvoiceItem {
+  id          String   @id @default(cuid())
+  invoiceId   String
+  
+  description String
+  quantity    Float    @default(1)
+  unitPrice   Float
+  amount      Float    // quantity * unitPrice
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  
+  @@index([invoiceId])
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
+  CANCELLED
 }

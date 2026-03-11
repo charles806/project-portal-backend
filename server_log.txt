@@ -1,0 +1,653 @@
+
+> project-portal-backend@1.0.0 dev
+> ts-node-dev --respawn --transpile-only src/server.ts
+
+[INFO] 20:57:17 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 5.9.3)
+[dotenv@17.3.1] injecting env (19) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+Server running on port 3001
+[Database] Successfully connected to database
+[INFO] 20:59:02 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+Server running on port 3001
+[Database] Successfully connected to database
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+Email verification error: PrismaClientValidationError: 
+Invalid `prisma.emailVerificationToken.findUnique()` invocation in
+/Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:67
+
+  143   return res.status(400).json({ error: 'Invalid token' });
+  144 }
+  145 
+→ 146 const verificationToken = await prisma.emailVerificationToken.findUnique({
+        where: {
+          token: "975d594395245f48dce9f4f2a0e72b7d10d38d723267b53ac3573c409bdaf912"
+        },
+        include: {
+          user: true
+          ~~~~
+        }
+      })
+
+Unknown field `user` for include statement on model `EmailVerificationToken`. Available options are marked with ?.
+    at wn (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:29:1363)
+    at $n.handleRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6958)
+    at $n.handleAndLogRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6623)
+    at $n.request (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6307)
+    at l (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:130:9633)
+    at /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:31 {
+  clientVersion: '5.22.0'
+}
+Email verification error: PrismaClientValidationError: 
+Invalid `prisma.emailVerificationToken.findUnique()` invocation in
+/Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:67
+
+  143   return res.status(400).json({ error: 'Invalid token' });
+  144 }
+  145 
+→ 146 const verificationToken = await prisma.emailVerificationToken.findUnique({
+        where: {
+          token: "975d594395245f48dce9f4f2a0e72b7d10d38d723267b53ac3573c409bdaf912"
+        },
+        include: {
+          user: true
+          ~~~~
+        }
+      })
+
+Unknown field `user` for include statement on model `EmailVerificationToken`. Available options are marked with ?.
+    at wn (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:29:1363)
+    at $n.handleRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6958)
+    at $n.handleAndLogRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6623)
+    at $n.request (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6307)
+    at l (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:130:9633)
+    at /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:31 {
+  clientVersion: '5.22.0'
+}
+Email verification error: PrismaClientValidationError: 
+Invalid `prisma.emailVerificationToken.findUnique()` invocation in
+/Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:67
+
+  143   return res.status(400).json({ error: 'Invalid token' });
+  144 }
+  145 
+→ 146 const verificationToken = await prisma.emailVerificationToken.findUnique({
+        where: {
+          token: "975d594395245f48dce9f4f2a0e72b7d10d38d723267b53ac3573c409bdaf912"
+        },
+        include: {
+          user: true
+          ~~~~
+        }
+      })
+
+Unknown field `user` for include statement on model `EmailVerificationToken`. Available options are marked with ?.
+    at wn (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:29:1363)
+    at $n.handleRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6958)
+    at $n.handleAndLogRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6623)
+    at $n.request (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6307)
+    at l (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:130:9633)
+    at /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:31 {
+  clientVersion: '5.22.0'
+}
+Email verification error: PrismaClientValidationError: 
+Invalid `prisma.emailVerificationToken.findUnique()` invocation in
+/Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:67
+
+  143   return res.status(400).json({ error: 'Invalid token' });
+  144 }
+  145 
+→ 146 const verificationToken = await prisma.emailVerificationToken.findUnique({
+        where: {
+          token: "975d594395245f48dce9f4f2a0e72b7d10d38d723267b53ac3573c409bdaf912"
+        },
+        include: {
+          user: true
+          ~~~~
+        }
+      })
+
+Unknown field `user` for include statement on model `EmailVerificationToken`. Available options are marked with ?.
+    at wn (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:29:1363)
+    at $n.handleRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6958)
+    at $n.handleAndLogRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6623)
+    at $n.request (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6307)
+    at l (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:130:9633)
+    at /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:31 {
+  clientVersion: '5.22.0'
+}
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query SELECT "public"."WorkspaceMember"."id", "public"."WorkspaceMember"."workspaceId", "public"."WorkspaceMember"."userId", "public"."WorkspaceMember"."role", "public"."WorkspaceMember"."joinedAt" FROM "public"."WorkspaceMember" WHERE "public"."WorkspaceMember"."workspaceId" IN ($1,$2) OFFSET $3
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."WorkspaceMember"."id", "public"."WorkspaceMember"."workspaceId", "public"."WorkspaceMember"."userId", "public"."WorkspaceMember"."role", "public"."WorkspaceMember"."joinedAt" FROM "public"."WorkspaceMember" WHERE ("public"."WorkspaceMember"."workspaceId" = $1 AND "public"."WorkspaceMember"."userId" = $2) LIMIT $3 OFFSET $4
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Project"."id", "public"."Project"."name", "public"."Project"."description", "public"."Project"."status", "public"."Project"."priority", "public"."Project"."budget", "public"."Project"."spent", "public"."Project"."progress", "public"."Project"."startDate", "public"."Project"."endDate", "public"."Project"."workspaceId", "public"."Project"."createdAt", "public"."Project"."updatedAt" FROM "public"."Project" WHERE "public"."Project"."workspaceId" = $1 ORDER BY "public"."Project"."createdAt" DESC OFFSET $2
+prisma:query SELECT "public"."Milestone"."id", "public"."Milestone"."projectId", "public"."Milestone"."title", "public"."Milestone"."description", "public"."Milestone"."dueDate", "public"."Milestone"."status", "public"."Milestone"."assignee", "public"."Milestone"."createdAt", "public"."Milestone"."updatedAt" FROM "public"."Milestone" WHERE "public"."Milestone"."projectId" IN ($1,$2,$3) OFFSET $4
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+[INFO] 11:27:18 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/server.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+Server running on port 3001
+[Database] Successfully connected to database
+[INFO] 11:27:30 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/server.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+ReferenceError: router is not defined
+    at Object.<anonymous> (/Users/uche/Desktop/portalwave/prtalwave-backend/src/server.ts:38:1)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1562:14)
+    at Module._compile (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:69:33)
+    at node:internal/modules/cjs/loader:1699:10
+    at require.extensions..jsx.require.extensions..js (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:114:20)
+    at require.extensions.<computed> (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:71:20)
+    at Object.nodeDevHook [as .ts] (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/ts-node-dev/lib/hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1313:32)
+    at Function._load (node:internal/modules/cjs/loader:1123:12)
+[ERROR] 11:27:32 ReferenceError: router is not defined
+[INFO] 11:27:34 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/server.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+Server running on port 3001
+[Database] Successfully connected to database
+[INFO] 11:45:21 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/workspaces.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+Server running on port 3001
+[Database] Successfully connected to database
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt" FROM "public"."Workspace" WHERE ("public"."Workspace"."slug" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query INSERT INTO "public"."Workspace" ("id","name","slug","ownerId","createdAt","updatedAt") VALUES ($1,$2,$3,$4,$5,$6) RETURNING "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt"
+prisma:query INSERT INTO "public"."WorkspaceMember" ("id","workspaceId","userId","role","joinedAt") VALUES ($1,$2,$3,$4,$5) RETURNING "public"."WorkspaceMember"."id", "public"."WorkspaceMember"."workspaceId", "public"."WorkspaceMember"."userId", "public"."WorkspaceMember"."role", "public"."WorkspaceMember"."joinedAt"
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query SELECT "public"."WorkspaceMember"."id", "public"."WorkspaceMember"."workspaceId", "public"."WorkspaceMember"."userId", "public"."WorkspaceMember"."role", "public"."WorkspaceMember"."joinedAt" FROM "public"."WorkspaceMember" WHERE "public"."WorkspaceMember"."workspaceId" IN ($1) OFFSET $2
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."WorkspaceMember"."id", "public"."WorkspaceMember"."workspaceId", "public"."WorkspaceMember"."userId", "public"."WorkspaceMember"."role", "public"."WorkspaceMember"."joinedAt" FROM "public"."WorkspaceMember" WHERE ("public"."WorkspaceMember"."workspaceId" = $1 AND "public"."WorkspaceMember"."userId" = $2) LIMIT $3 OFFSET $4
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Project"."id", "public"."Project"."name", "public"."Project"."description", "public"."Project"."status", "public"."Project"."priority", "public"."Project"."budget", "public"."Project"."spent", "public"."Project"."progress", "public"."Project"."startDate", "public"."Project"."endDate", "public"."Project"."workspaceId", "public"."Project"."createdAt", "public"."Project"."updatedAt" FROM "public"."Project" WHERE "public"."Project"."workspaceId" = $1 ORDER BY "public"."Project"."createdAt" DESC OFFSET $2
+prisma:query COMMIT
+Email verification error: PrismaClientValidationError: 
+Invalid `prisma.emailVerificationToken.findUnique()` invocation in
+/Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:67
+
+  143   return res.status(400).json({ error: 'Invalid token' });
+  144 }
+  145 
+→ 146 const verificationToken = await prisma.emailVerificationToken.findUnique({
+        where: {
+          token: "9745429f05d098bde2d18b348b6db1cfaf8da286021b75d0c39b831e2167c977"
+        },
+        include: {
+          user: true
+          ~~~~
+        }
+      })
+
+Unknown field `user` for include statement on model `EmailVerificationToken`. Available options are marked with ?.
+    at wn (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:29:1363)
+    at $n.handleRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6958)
+    at $n.handleAndLogRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6623)
+    at $n.request (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6307)
+    at l (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:130:9633)
+    at /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:31 {
+  clientVersion: '5.22.0'
+}
+Email verification error: PrismaClientValidationError: 
+Invalid `prisma.emailVerificationToken.findUnique()` invocation in
+/Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:67
+
+  143   return res.status(400).json({ error: 'Invalid token' });
+  144 }
+  145 
+→ 146 const verificationToken = await prisma.emailVerificationToken.findUnique({
+        where: {
+          token: "9745429f05d098bde2d18b348b6db1cfaf8da286021b75d0c39b831e2167c977"
+        },
+        include: {
+          user: true
+          ~~~~
+        }
+      })
+
+Unknown field `user` for include statement on model `EmailVerificationToken`. Available options are marked with ?.
+    at wn (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:29:1363)
+    at $n.handleRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6958)
+    at $n.handleAndLogRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6623)
+    at $n.request (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6307)
+    at l (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:130:9633)
+    at /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:31 {
+  clientVersion: '5.22.0'
+}
+[INFO] 12:31:29 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts has been modified
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+[dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+Server running on port 3001
+[INFO] 12:31:34 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts has been modified
+[Database] Successfully connected to database
+[dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+Server running on port 3001
+[Database] Successfully connected to database
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+Email verification error: PrismaClientInitializationError: 
+Invalid `prisma.emailVerificationToken.findUnique()` invocation in
+/Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:67
+
+  143   return res.status(400).json({ error: 'Invalid token' });
+  144 }
+  145 
+→ 146 const verificationToken = await prisma.emailVerificationToken.findUnique(
+Timed out fetching a new connection from the connection pool. More info: http://pris.ly/d/connection-pool (Current connection pool timeout: 10, connection limit: 5)
+    at $n.handleRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:7615)
+    at $n.handleAndLogRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6623)
+    at $n.request (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6307)
+    at l (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:130:9633)
+    at /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:31 {
+  clientVersion: '5.22.0',
+  errorCode: undefined
+}
+Email verification error: PrismaClientInitializationError: 
+Invalid `prisma.emailVerificationToken.findUnique()` invocation in
+/Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:67
+
+  143   return res.status(400).json({ error: 'Invalid token' });
+  144 }
+  145 
+→ 146 const verificationToken = await prisma.emailVerificationToken.findUnique(
+Timed out fetching a new connection from the connection pool. More info: http://pris.ly/d/connection-pool (Current connection pool timeout: 10, connection limit: 5)
+    at $n.handleRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:7615)
+    at $n.handleAndLogRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6623)
+    at $n.request (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6307)
+    at l (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:130:9633)
+    at /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:31 {
+  clientVersion: '5.22.0',
+  errorCode: undefined
+}
+Email verification error: PrismaClientInitializationError: 
+Invalid `prisma.emailVerificationToken.findUnique()` invocation in
+/Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:67
+
+  143   return res.status(400).json({ error: 'Invalid token' });
+  144 }
+  145 
+→ 146 const verificationToken = await prisma.emailVerificationToken.findUnique(
+Timed out fetching a new connection from the connection pool. More info: http://pris.ly/d/connection-pool (Current connection pool timeout: 10, connection limit: 5)
+    at $n.handleRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:7615)
+    at $n.handleAndLogRequestError (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6623)
+    at $n.request (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:121:6307)
+    at l (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:130:9633)
+    at /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts:146:31 {
+  clientVersion: '5.22.0',
+  errorCode: undefined
+}
+[INFO] 12:44:57 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+Server running on port 3001
+[Database] Connection failed: PrismaClientInitializationError: Timed out fetching a new connection from the connection pool. More info: http://pris.ly/d/connection-pool (Current connection pool timeout: 10, connection limit: 5)
+    at t (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/@prisma/client/runtime/library.js:112:2488) {
+  clientVersion: '5.22.0',
+  errorCode: 'P2024'
+}
+[INFO] 12:52:29 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/config/database.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+ReferenceError: PrismaClient is not defined
+    at Object.<anonymous> (/Users/uche/Desktop/portalwave/prtalwave-backend/src/config/database.ts:10:16)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1562:14)
+    at Module._compile (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:69:33)
+    at node:internal/modules/cjs/loader:1699:10
+    at require.extensions..jsx.require.extensions..js (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:114:20)
+    at require.extensions.<computed> (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:71:20)
+    at Object.nodeDevHook [as .ts] (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/ts-node-dev/lib/hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1313:32)
+    at Function._load (node:internal/modules/cjs/loader:1123:12)
+[ERROR] 12:52:31 ReferenceError: PrismaClient is not defined
+[INFO] 12:52:36 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/config/passport.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+ReferenceError: PrismaClient is not defined
+    at Object.<anonymous> (/Users/uche/Desktop/portalwave/prtalwave-backend/src/config/database.ts:10:16)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1562:14)
+    at Module._compile (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:69:33)
+    at node:internal/modules/cjs/loader:1699:10
+    at require.extensions..jsx.require.extensions..js (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:114:20)
+    at require.extensions.<computed> (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:71:20)
+    at Object.nodeDevHook [as .ts] (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/ts-node-dev/lib/hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1313:32)
+    at Function._load (node:internal/modules/cjs/loader:1123:12)
+[ERROR] 12:52:38 ReferenceError: PrismaClient is not defined
+[INFO] 12:52:41 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/lib/prisma.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+ReferenceError: PrismaClient is not defined
+    at Object.<anonymous> (/Users/uche/Desktop/portalwave/prtalwave-backend/src/lib/prisma.ts:6:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1562:14)
+    at Module._compile (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:69:33)
+    at node:internal/modules/cjs/loader:1699:10
+    at require.extensions..jsx.require.extensions..js (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:114:20)
+    at require.extensions.<computed> (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:71:20)
+    at Object.nodeDevHook [as .ts] (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/ts-node-dev/lib/hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1313:32)
+    at Function._load (node:internal/modules/cjs/loader:1123:12)
+[ERROR] 12:52:43 ReferenceError: PrismaClient is not defined
+[INFO] 12:52:43 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/lib/prisma.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+ReferenceError: PrismaClient is not defined
+    at Object.<anonymous> (/Users/uche/Desktop/portalwave/prtalwave-backend/src/config/database.ts:10:16)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1562:14)
+    at Module._compile (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:69:33)
+    at node:internal/modules/cjs/loader:1699:10
+    at require.extensions..jsx.require.extensions..js (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:114:20)
+    at require.extensions.<computed> (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:71:20)
+    at Object.nodeDevHook [as .ts] (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/ts-node-dev/lib/hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1313:32)
+    at Function._load (node:internal/modules/cjs/loader:1123:12)
+[ERROR] 12:52:45 ReferenceError: PrismaClient is not defined
+[INFO] 12:52:46 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/lib/prisma.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+ReferenceError: PrismaClient is not defined
+    at Object.<anonymous> (/Users/uche/Desktop/portalwave/prtalwave-backend/src/lib/prisma.ts:7:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1562:14)
+    at Module._compile (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:69:33)
+    at node:internal/modules/cjs/loader:1699:10
+    at require.extensions..jsx.require.extensions..js (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:114:20)
+    at require.extensions.<computed> (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:71:20)
+    at Object.nodeDevHook [as .ts] (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/ts-node-dev/lib/hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1313:32)
+    at Function._load (node:internal/modules/cjs/loader:1123:12)
+[ERROR] 12:52:47 ReferenceError: PrismaClient is not defined
+[INFO] 12:52:50 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/lib/prisma.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+ReferenceError: PrismaClient is not defined
+    at Object.<anonymous> (/Users/uche/Desktop/portalwave/prtalwave-backend/src/lib/prisma.ts:7:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1562:14)
+    at Module._compile (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:69:33)
+    at node:internal/modules/cjs/loader:1699:10
+    at require.extensions..jsx.require.extensions..js (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:114:20)
+    at require.extensions.<computed> (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:71:20)
+    at Object.nodeDevHook [as .ts] (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/ts-node-dev/lib/hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1313:32)
+    at Function._load (node:internal/modules/cjs/loader:1123:12)
+[ERROR] 12:52:52 ReferenceError: PrismaClient is not defined
+[INFO] 12:53:07 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+ReferenceError: PrismaClient is not defined
+    at Object.<anonymous> (/Users/uche/Desktop/portalwave/prtalwave-backend/src/lib/prisma.ts:7:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1562:14)
+    at Module._compile (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:69:33)
+    at node:internal/modules/cjs/loader:1699:10
+    at require.extensions..jsx.require.extensions..js (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:114:20)
+    at require.extensions.<computed> (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:71:20)
+    at Object.nodeDevHook [as .ts] (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/ts-node-dev/lib/hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1313:32)
+    at Function._load (node:internal/modules/cjs/loader:1123:12)
+[ERROR] 12:53:09 ReferenceError: PrismaClient is not defined
+[INFO] 12:53:11 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/routes/auth.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+ReferenceError: PrismaClient is not defined
+    at Object.<anonymous> (/Users/uche/Desktop/portalwave/prtalwave-backend/src/lib/prisma.ts:7:7)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1562:14)
+    at Module._compile (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:69:33)
+    at node:internal/modules/cjs/loader:1699:10
+    at require.extensions..jsx.require.extensions..js (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:114:20)
+    at require.extensions.<computed> (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:71:20)
+    at Object.nodeDevHook [as .ts] (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/ts-node-dev/lib/hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1313:32)
+    at Function._load (node:internal/modules/cjs/loader:1123:12)
+[ERROR] 12:53:11 ReferenceError: PrismaClient is not defined
+[INFO] 12:54:09 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/lib/prisma.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+ReferenceError: PrismaClient is not defined
+    at Object.<anonymous> (/Users/uche/Desktop/portalwave/prtalwave-backend/src/config/database.ts:10:16)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1562:14)
+    at Module._compile (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:69:33)
+    at node:internal/modules/cjs/loader:1699:10
+    at require.extensions..jsx.require.extensions..js (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:114:20)
+    at require.extensions.<computed> (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:71:20)
+    at Object.nodeDevHook [as .ts] (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/ts-node-dev/lib/hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1313:32)
+    at Function._load (node:internal/modules/cjs/loader:1123:12)
+[ERROR] 12:54:11 ReferenceError: PrismaClient is not defined
+[INFO] 12:54:40 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/config/database.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+ReferenceError: PrismaClient is not defined
+    at Object.<anonymous> (/Users/uche/Desktop/portalwave/prtalwave-backend/src/config/database.ts:10:16)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1562:14)
+    at Module._compile (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:69:33)
+    at node:internal/modules/cjs/loader:1699:10
+    at require.extensions..jsx.require.extensions..js (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:114:20)
+    at require.extensions.<computed> (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:71:20)
+    at Object.nodeDevHook [as .ts] (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/ts-node-dev/lib/hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1313:32)
+    at Function._load (node:internal/modules/cjs/loader:1123:12)
+[ERROR] 12:54:42 ReferenceError: PrismaClient is not defined
+[INFO] 12:56:12 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/config/database.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+Server running on port 3001
+[Database] Successfully connected to database
+[INFO] 12:56:33 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/config/database.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+ReferenceError: PrismaClient is not defined
+    at Object.<anonymous> (/Users/uche/Desktop/portalwave/prtalwave-backend/src/config/database.ts:10:16)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1562:14)
+    at Module._compile (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:69:33)
+    at node:internal/modules/cjs/loader:1699:10
+    at require.extensions..jsx.require.extensions..js (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:114:20)
+    at require.extensions.<computed> (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:71:20)
+    at Object.nodeDevHook [as .ts] (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/ts-node-dev/lib/hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1313:32)
+    at Function._load (node:internal/modules/cjs/loader:1123:12)
+[ERROR] 12:56:35 ReferenceError: PrismaClient is not defined
+[INFO] 12:56:37 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/lib/prisma.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+ReferenceError: PrismaClient is not defined
+    at Object.<anonymous> (/Users/uche/Desktop/portalwave/prtalwave-backend/src/config/database.ts:10:16)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1562:14)
+    at Module._compile (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:69:33)
+    at node:internal/modules/cjs/loader:1699:10
+    at require.extensions..jsx.require.extensions..js (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:114:20)
+    at require.extensions.<computed> (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:71:20)
+    at Object.nodeDevHook [as .ts] (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/ts-node-dev/lib/hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1313:32)
+    at Function._load (node:internal/modules/cjs/loader:1123:12)
+[ERROR] 12:56:37 ReferenceError: PrismaClient is not defined
+[INFO] 12:56:43 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/config/database.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+Server running on port 3001
+[INFO] 12:56:45 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/config/database.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+ReferenceError: PrismaClient is not defined
+    at Object.<anonymous> (/Users/uche/Desktop/portalwave/prtalwave-backend/src/config/database.ts:10:16)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1562:14)
+    at Module._compile (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module.m._compile (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:69:33)
+    at node:internal/modules/cjs/loader:1699:10
+    at require.extensions..jsx.require.extensions..js (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:114:20)
+    at require.extensions.<computed> (/private/var/folders/rt/tldgtrgd7yg12jjs8jx_dl4m0000gn/T/ts-node-dev-hook-02487769169252374.js:71:20)
+    at Object.nodeDevHook [as .ts] (/Users/uche/Desktop/portalwave/prtalwave-backend/node_modules/ts-node-dev/lib/hook.js:63:13)
+    at Module.load (node:internal/modules/cjs/loader:1313:32)
+    at Function._load (node:internal/modules/cjs/loader:1123:12)
+[ERROR] 12:56:47 ReferenceError: PrismaClient is not defined
+[INFO] 12:56:56 Restarting: /Users/uche/Desktop/portalwave/prtalwave-backend/src/config/database.ts has been modified
+[dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+[Database] Initializing Prisma with URL: postgresql://neondb_owner:****@ep-polished-glitter-ai1qmsd2-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=30
+Server running on port 3001
+[Database] Successfully connected to database
+[Database] Successfully connected to database
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."User"."id", "public"."User"."email", "public"."User"."username", "public"."User"."passwordHash", "public"."User"."firstName", "public"."User"."lastName", "public"."User"."oauthProvider", "public"."User"."oauthId", "public"."User"."createdAt", "public"."User"."updatedAt", "public"."User"."emailVerified" FROM "public"."User" WHERE ("public"."User"."email" = $1 OR "public"."User"."username" = $2) LIMIT $3 OFFSET $4
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query INSERT INTO "public"."RefreshToken" ("id","token","userId","expiresAt","createdAt") VALUES ($1,$2,$3,$4,$5) RETURNING "public"."RefreshToken"."id", "public"."RefreshToken"."token", "public"."RefreshToken"."userId", "public"."RefreshToken"."expiresAt", "public"."RefreshToken"."createdAt"
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Workspace"."id", "public"."Workspace"."name", "public"."Workspace"."slug", "public"."Workspace"."ownerId", "public"."Workspace"."createdAt", "public"."Workspace"."updatedAt", COALESCE("aggr_selection_0_Project"."_aggr_count_projects", 0) AS "_aggr_count_projects", COALESCE("aggr_selection_1_WorkspaceMember"."_aggr_count_members", 0) AS "_aggr_count_members" FROM "public"."Workspace" LEFT JOIN (SELECT "public"."Project"."workspaceId", COUNT(*) AS "_aggr_count_projects" FROM "public"."Project" WHERE 1=1 GROUP BY "public"."Project"."workspaceId") AS "aggr_selection_0_Project" ON ("public"."Workspace"."id" = "aggr_selection_0_Project"."workspaceId") LEFT JOIN (SELECT "public"."WorkspaceMember"."workspaceId", COUNT(*) AS "_aggr_count_members" FROM "public"."WorkspaceMember" WHERE 1=1 GROUP BY "public"."WorkspaceMember"."workspaceId") AS "aggr_selection_1_WorkspaceMember" ON ("public"."Workspace"."id" = "aggr_selection_1_WorkspaceMember"."workspaceId") WHERE ("public"."Workspace"."ownerId" = $1 OR ("public"."Workspace"."id") IN (SELECT "t1"."workspaceId" FROM "public"."WorkspaceMember" AS "t1" WHERE ("t1"."userId" = $2 AND "t1"."workspaceId" IS NOT NULL))) ORDER BY "public"."Workspace"."createdAt" DESC OFFSET $3
+prisma:query SELECT "public"."WorkspaceMember"."id", "public"."WorkspaceMember"."workspaceId", "public"."WorkspaceMember"."userId", "public"."WorkspaceMember"."role", "public"."WorkspaceMember"."joinedAt" FROM "public"."WorkspaceMember" WHERE "public"."WorkspaceMember"."workspaceId" IN ($1) OFFSET $2
+prisma:query COMMIT
+prisma:query SELECT 1
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."WorkspaceMember"."id", "public"."WorkspaceMember"."workspaceId", "public"."WorkspaceMember"."userId", "public"."WorkspaceMember"."role", "public"."WorkspaceMember"."joinedAt" FROM "public"."WorkspaceMember" WHERE ("public"."WorkspaceMember"."workspaceId" = $1 AND "public"."WorkspaceMember"."userId" = $2) LIMIT $3 OFFSET $4
+prisma:query COMMIT
+prisma:query BEGIN
+prisma:query DEALLOCATE ALL
+prisma:query SELECT "public"."Project"."id", "public"."Project"."name", "public"."Project"."description", "public"."Project"."status", "public"."Project"."priority", "public"."Project"."budget", "public"."Project"."spent", "public"."Project"."progress", "public"."Project"."startDate", "public"."Project"."endDate", "public"."Project"."workspaceId", "public"."Project"."createdAt", "public"."Project"."updatedAt" FROM "public"."Project" WHERE "public"."Project"."workspaceId" = $1 ORDER BY "public"."Project"."createdAt" DESC OFFSET $2
+prisma:query COMMIT

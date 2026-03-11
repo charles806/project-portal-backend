@@ -1,6 +1,6 @@
 import { Router, NextFunction, Response } from 'express';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
-import prisma from '../config/database';
+import { prisma } from '../lib/prisma';
 import { UnauthorizedError, ForbiddenError, NotFoundError, BadRequestError } from '../utils/errors';
 
 const router = Router();
@@ -8,7 +8,7 @@ const router = Router();
 // All routes require auth
 router.use(authenticateToken);
 
-// GET /api/v1/workspaces - Get all user's workspaces
+// GET Request : Get all user's workspaces
 router.get('/', async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     if (!req.user) {
@@ -39,6 +39,7 @@ router.get('/', async (req: AuthRequest, res: Response, next: NextFunction) => {
   }
 });
 
+// GET Request : Get a specfic workspace by Id
 router.get('/:id', async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const userId = req.user!.userId;
@@ -73,7 +74,7 @@ router.get('/:id', async (req: AuthRequest, res: Response, next: NextFunction) =
   }
 });
 
-// POST /api/v1/workspaces - Create workspace
+// POST - Create workspace
 router.post('/', async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const userId = req.user!.userId;
@@ -125,7 +126,7 @@ router.post('/', async (req: AuthRequest, res: Response, next: NextFunction) => 
   }
 });
 
-// PATCH /api/v1/workspaces/:id - Update workspace
+// PATCH  Update workspace
 router.patch('/:id', async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const userId = req.user!.userId;
@@ -147,8 +148,15 @@ router.patch('/:id', async (req: AuthRequest, res: Response, next: NextFunction)
 
     const updateData: any = {};
     if (name) {
+      let slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      const existingWorkspace = await prisma.workspace.findUnique({
+        where: { slug }
+      });
+      if (existingWorkspace && existingWorkspace.id !== id) {
+        slug = `${slug}-${Math.random().toString(36).substring(2, 6)}`;
+      }
       updateData.name = name;
-      updateData.slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      updateData.slug = slug;
     }
 
     const workspace = await prisma.workspace.update({
@@ -168,7 +176,7 @@ router.patch('/:id', async (req: AuthRequest, res: Response, next: NextFunction)
   }
 });
 
-// DELETE /api/v1/workspaces/:id - Delete workspace
+// DELETE  - Delete workspace 
 router.delete('/:id', async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const userId = req.user!.userId;

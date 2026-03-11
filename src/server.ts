@@ -12,6 +12,8 @@ import workspaceRoutes from './routes/workspaces';
 import projectRoutes from './routes/project';
 import memberRoutes from './routes/members';
 import milestoneRoutes from './routes/milestones';
+import invoiceRoutes from './routes/invoice';
+import uploadRoutes from './routes/upload';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -33,12 +35,15 @@ app.get('/health', (req, res) => {
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/workspaces', workspaceRoutes);
 app.use('/api/v1/projects', projectRoutes);
-app.use('/api/v1/workspaces', memberRoutes);
-app.use('/api/v1/projects', milestoneRoutes);
+app.use('/api/v1/workspaces', memberRoutes); 
+app.use('/api/v1', milestoneRoutes);
+app.use('/api/v1/invoices', invoiceRoutes);
+app.use('/api/v1/upload', uploadRoutes);
+
 
 // Error Handler
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

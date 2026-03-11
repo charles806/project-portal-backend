@@ -4,6 +4,7 @@ import workspacesRouter from './workspaces';
 import projectsRouter from './project';
 import membersRouter from './members';
 import milestonesRouter from './milestones';
+import authRoutes from './auth';
 
 const router = Router();
 
